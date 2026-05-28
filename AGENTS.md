@@ -15,31 +15,41 @@ Run `lint` then `test` before committing. `build` is the full CI pipeline (typec
 
 ## Architecture
 
-Single-page React 19 + TypeScript app. No router, no state library.
+React 19 + TypeScript SPA with client-side routing and bearer-token authentication.
 
 ```
 src/
-├── components/       # 6 UI components, each with named export
+├── components/       # UI components, each with named export
 │   ├── Dashboard.tsx # Orchestrator — calls useWeatherData, renders children
-│   ├── Header.tsx    # Title, author, last-updated timestamp
+│   ├── Header.tsx    # Title, author, last-updated timestamp, logout button
 │   ├── ConnectionStatus.tsx  # Live / Reconnecting dot
 │   ├── CurrentIndicators.tsx # Temp & humidity cards (color-coded)
 │   ├── TemperatureChart.tsx  # Recharts line chart (red #ff6b6b)
-│   └── HumidityChart.tsx     # Recharts line chart (teal #4ecdc4)
+│   ├── HumidityChart.tsx     # Recharts line chart (teal #4ecdc4)
+│   ├── LoginPage.tsx         # Login form with validation + inline error
+│   ├── LoginPage.css         # Login page styles
+│   └── ProtectedRoute.tsx    # Route guard — redirects to /login if unauthenticated
+├── contexts/
+│   └── AuthContext.tsx        # AuthProvider + useAuth hook (token in localStorage)
 ├── hooks/
-│   └── useWeatherData.ts     # HTTP polling every 5s via fetchLatestMeasurements
+│   └── useWeatherData.ts      # HTTP polling every 5s via fetchLatestMeasurements
 ├── services/
-│   └── api.ts                # fetchLatestMeasurements → GET /api/measurements/latest
+│   └── api.ts                 # apiRequest wrapper (token injection, 401 handling), loginUser, fetchLatestMeasurements
 ├── types/
-│   └── Measurement.ts        # { created_at, humidity, temperature }
-└── tests/                    # Vitest + RTL, one test file per component
+│   └── Measurement.ts         # { created_at, humidity, temperature }
+└── tests/                     # Vitest + RTL, one test file per component
 ```
 
 Data flow: `api.ts` → `useWeatherData` (polling) → `Dashboard` → child components via props.
 
+Routes: `/` redirects to `/dashboard` or `/login` based on auth state; `/login` is public; `/dashboard` is protected via `ProtectedRoute`.
+
 ## Key details
 
-- **API base**: hardcoded in `src/services/api.ts` as `http://13.223.175.101:5000/api`. Change there or in `nginx.conf` for deployment.
+- **API base**: configurable via `VITE_API_BASE` env var (`.env` file); defaults to `http://13.223.175.101:5000/api`.
+- **Auth**: bearer token stored in `localStorage` under key `auth_token`. Login endpoint: `POST /api/login` returns `{ access_token }`.
+- **Token injection**: `apiRequest` wrapper in `src/services/api.ts` reads token from localStorage and sets `Authorization: Bearer <token>`. 401 responses clear the token and redirect to `/login`.
+- **Logout**: local only (clears token, no backend call). Logout button in header top-right.
 - **No OpenCode config** found in repo (no `opencode.json`).
 - **CSS is global** (no CSS modules or CSS-in-JS). Class names come from raw strings.
 - **Charts reverse data** (API returns newest-first, charts show chronological left-to-right).
