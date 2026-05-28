@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext.tsx'
+import { useAuth } from '../../contexts/AuthContext.tsx'
+import './Header.css'
 
 interface HeaderProps {
   lastUpdated: Date | null
@@ -30,4 +31,3 @@ export function Header({ lastUpdated }: HeaderProps) {
     </header>
   )
 }
-

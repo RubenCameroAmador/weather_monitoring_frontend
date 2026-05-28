@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { ConnectionStatus } from '../components/ConnectionStatus'
+import { ConnectionStatus } from '../components/ConnectionStatus/ConnectionStatus'
 
 describe('ConnectionStatus', () => {
   it('shows Live when connected', () => {

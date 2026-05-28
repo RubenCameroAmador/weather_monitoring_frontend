@@ -1,3 +1,5 @@
+import './CurrentIndicators.css'
+
 interface CurrentIndicatorsProps {
   temperature: number
   humidity: number
@@ -22,4 +24,3 @@ export function CurrentIndicators({ temperature, humidity }: CurrentIndicatorsPr
     </div>
   )
 }
-

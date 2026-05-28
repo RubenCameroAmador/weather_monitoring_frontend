@@ -17,18 +17,19 @@ Run `lint` then `test` before committing. `build` is the full CI pipeline (typec
 
 React 19 + TypeScript SPA with client-side routing and bearer-token authentication.
 
+Every component lives in its own folder (`components/{Name}/{Name}.tsx`) with its styles colocated (`components/{Name}/{Name}.css`).
+
 ```
 src/
-├── components/       # UI components, each with named export
-│   ├── Dashboard.tsx # Orchestrator — calls useWeatherData, renders children
-│   ├── Header.tsx    # Title, author, last-updated timestamp, logout button
-│   ├── ConnectionStatus.tsx  # Live / Reconnecting dot
-│   ├── CurrentIndicators.tsx # Temp & humidity cards (color-coded)
-│   ├── TemperatureChart.tsx  # Recharts line chart (red #ff6b6b)
-│   ├── HumidityChart.tsx     # Recharts line chart (teal #4ecdc4)
-│   ├── LoginPage.tsx         # Login form with validation + inline error
-│   ├── LoginPage.css         # Login page styles
-│   └── ProtectedRoute.tsx    # Route guard — redirects to /login if unauthenticated
+├── components/       # UI components, each in its own folder
+│   ├── Dashboard/    # Orchestrator — calls useWeatherData, renders children
+│   ├── Header/       # Title, author, last-updated timestamp, logout button
+│   ├── ConnectionStatus/  # Live / Reconnecting dot
+│   ├── CurrentIndicators/ # Temp & humidity cards (color-coded)
+│   ├── TemperatureChart/  # Recharts line chart (red #ff6b6b)
+│   ├── HumidityChart/     # Recharts line chart (teal #4ecdc4)
+│   ├── LoginPage/         # Login form with validation + inline error
+│   └── ProtectedRoute/    # Route guard — redirects to /login if unauthenticated
 ├── contexts/
 │   └── AuthContext.tsx        # AuthProvider + useAuth hook (token in localStorage)
 ├── hooks/
@@ -50,8 +51,7 @@ Routes: `/` redirects to `/dashboard` or `/login` based on auth state; `/login` 
 - **Auth**: bearer token stored in `localStorage` under key `auth_token`. Login endpoint: `POST /api/login` returns `{ access_token }`.
 - **Token injection**: `apiRequest` wrapper in `src/services/api.ts` reads token from localStorage and sets `Authorization: Bearer <token>`. 401 responses clear the token and redirect to `/login`.
 - **Logout**: local only (clears token, no backend call). Logout button in header top-right.
-- **No OpenCode config** found in repo (no `opencode.json`).
-- **CSS is global** (no CSS modules or CSS-in-JS). Class names come from raw strings.
+- **CSS is per-component** — each component folder has its own `.css` file. No shared stylesheets.
 - **Charts reverse data** (API returns newest-first, charts show chronological left-to-right).
 - **Imports use `.tsx` extension** (required by `verbatimModuleSyntax` in tsconfig).
 - **`StrictMode`** is enabled in `main.tsx` — effects fire twice in dev.

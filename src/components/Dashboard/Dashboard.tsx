@@ -1,9 +1,9 @@
-import { useWeatherData } from '../hooks/useWeatherData'
-import { CurrentIndicators } from './CurrentIndicators'
-import { TemperatureChart } from './TemperatureChart'
-import { HumidityChart } from './HumidityChart'
-import { ConnectionStatus } from './ConnectionStatus'
-import { Header } from './Header'
+import { useWeatherData } from '../../hooks/useWeatherData'
+import { CurrentIndicators } from '../CurrentIndicators/CurrentIndicators'
+import { TemperatureChart } from '../TemperatureChart/TemperatureChart'
+import { HumidityChart } from '../HumidityChart/HumidityChart'
+import { ConnectionStatus } from '../ConnectionStatus/ConnectionStatus'
+import { Header } from '../Header/Header'
 import './Dashboard.css'
 
 export function Dashboard() {
@@ -28,4 +28,3 @@ export function Dashboard() {
     </div>
   )
 }
-

@@ -1,6 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import type { Measurement } from '../types/Measurement'
+import type { Measurement } from '../../types/Measurement'
 import { format } from 'date-fns'
+import './HumidityChart.css'
 
 interface Props {
   measurements: Measurement[]
@@ -27,4 +28,3 @@ export function HumidityChart({ measurements }: Props) {
     </div>
   )
 }
-

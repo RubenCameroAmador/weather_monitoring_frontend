@@ -1,0 +1,14 @@
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.loading { text-align: center; color: #888; }
+
+@media (max-width: 768px) {
+  .charts-container { grid-template-columns: 1fr; }
+}

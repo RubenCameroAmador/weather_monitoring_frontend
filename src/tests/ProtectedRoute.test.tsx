@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import { describe, it, expect, beforeEach } from 'vitest'
 import { AuthProvider } from '../contexts/AuthContext'
-import { ProtectedRoute } from '../components/ProtectedRoute'
+import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute'
 
 function renderWithAuth(token: string | null, initialRoute = '/dashboard') {
   if (token) localStorage.setItem('auth_token', token)

@@ -1,0 +1,15 @@
+.header { text-align: center; margin-bottom: 1.5rem; position: relative; }
+.header h1 { font-size: 2rem; margin: 0; color: #1a1a2e; }
+.author { color: #666; margin: 0.25rem 0; }
+.last-updated { font-size: 0.85rem; color: #888; }
+.header-logout { position: absolute; top: 0; right: 0; }
+.logout-btn {
+  background: none; border: none; color: #888;
+  cursor: pointer; font-size: 0.85rem; padding: 0.25rem 0.5rem;
+  font-family: inherit;
+}
+.logout-btn:hover { color: #e74c3c; text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .header h1 { font-size: 1.5rem; }
+}

@@ -1,3 +1,5 @@
+import './ConnectionStatus.css'
+
 interface ConnectionStatusProps {
   isConnected: boolean
   error: string | null
@@ -12,4 +14,3 @@ export function ConnectionStatus({ isConnected, error }: ConnectionStatusProps) 
     </div>
   )
 }
-

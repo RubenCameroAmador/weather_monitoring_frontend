@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext.tsx'
-import { LoginPage } from './components/LoginPage'
-import { ProtectedRoute } from './components/ProtectedRoute'
-import { Dashboard } from './components/Dashboard'
+import { LoginPage } from './components/LoginPage/LoginPage'
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
+import { Dashboard } from './components/Dashboard/Dashboard'
 import './App.css'
 
 function App() {

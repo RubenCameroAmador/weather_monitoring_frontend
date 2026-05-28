@@ -11,31 +11,54 @@ A real-time weather monitoring dashboard built with **React 19**, **TypeScript**
 ```
 weather_monitoring_frontend/
 ├── src/
-│   ├── components/           # 6 UI components
-│   │   ├── Dashboard.tsx     # Orchestrator — root layout, data prop forwarding
-│   │   ├── Dashboard.css     # All dashboard & child styles (single CSS file)
-│   │   ├── Header.tsx        # Title, author, last-updated timestamp
-│   │   ├── ConnectionStatus.tsx  # Live / Reconnecting status dot
-│   │   ├── CurrentIndicators.tsx # Temperature & humidity cards
-│   │   ├── TemperatureChart.tsx  # Line chart for temperature
-│   │   └── HumidityChart.tsx     # Line chart for humidity
+│   ├── components/           # 8 components, each in its own folder
+│   │   ├── Dashboard/        # Orchestrator — root layout, data prop forwarding
+│   │   │   ├── Dashboard.tsx
+│   │   │   └── Dashboard.css
+│   │   ├── Header/           # Title, author, last-updated timestamp, logout
+│   │   │   ├── Header.tsx
+│   │   │   └── Header.css
+│   │   ├── ConnectionStatus/ # Live / Reconnecting status dot
+│   │   │   ├── ConnectionStatus.tsx
+│   │   │   └── ConnectionStatus.css
+│   │   ├── CurrentIndicators/ # Temperature & humidity cards
+│   │   │   ├── CurrentIndicators.tsx
+│   │   │   └── CurrentIndicators.css
+│   │   ├── TemperatureChart/ # Line chart for temperature
+│   │   │   ├── TemperatureChart.tsx
+│   │   │   └── TemperatureChart.css
+│   │   ├── HumidityChart/    # Line chart for humidity
+│   │   │   ├── HumidityChart.tsx
+│   │   │   └── HumidityChart.css
+│   │   ├── LoginPage/        # Login form with validation + inline error
+│   │   │   ├── LoginPage.tsx
+│   │   │   └── LoginPage.css
+│   │   └── ProtectedRoute/   # Route guard — redirects to /login if unauthenticated
+│   │       └── ProtectedRoute.tsx
+│   ├── contexts/
+│   │   └── AuthContext.tsx   # Auth state (token in localStorage, login/logout)
 │   ├── hooks/
 │   │   └── useWeatherData.ts # Data fetching hook (HTTP polling every 5s)
 │   ├── services/
-│   │   └── api.ts            # HTTP client — fetchLatestMeasurements()
+│   │   └── api.ts            # HTTP client — apiRequest wrapper, loginUser, fetchLatestMeasurements
 │   ├── types/
 │   │   └── Measurement.ts    # Measurement interface
 │   ├── tests/
 │   │   ├── setup.ts          # jest-dom matchers (global import)
+│   │   ├── test-utils.tsx    # Shared test wrapper (BrowserRouter + AuthProvider)
 │   │   ├── Header.test.tsx
 │   │   ├── CurrentIndicators.test.tsx
-│   │   └── ConnectionStatus.test.tsx
-│   ├── App.tsx               # Root component — renders <Dashboard />
+│   │   ├── ConnectionStatus.test.tsx
+│   │   ├── LoginPage.test.tsx
+│   │   ├── ProtectedRoute.test.tsx
+│   │   └── AuthContext.test.tsx
+│   ├── App.tsx               # Root component — router with Routes
 │   ├── App.css               # Body / #root reset styles
 │   └── main.tsx              # Entry point — createRoot + StrictMode
 ├── public/
 │   ├── favicon.svg
 │   └── icons.svg
+├── .env                      # VITE_API_BASE environment variable
 ├── index.html                # Vite HTML entry (root div, script → main.tsx)
 ├── package.json
 ├── vite.config.ts            # Vite + Vitest config
@@ -46,9 +69,14 @@ weather_monitoring_frontend/
 ├── Dockerfile                # Multi-stage: node:22-alpine build → nginx serve
 ├── docker-compose.yml        # Exposes port 80, uses Dockerfile
 ├── nginx.conf                # SPA routing + /api/ proxy + static caching
+├── .opencode/skills/         # OpenCode skill definitions
 ├── README.md
-├── IMPLEMENTATION_GUIDE.md   # Step-by-step doc (written during development)
-└── AGENTS.md                 # OpenCode agent instructions
+├── AGENTS.md                 # OpenCode agent instructions
+└── docs/
+    ├── architecture.md
+    ├── frontend-guidelines.md
+    └── specs/
+        └── authentication-feature.md
 ```
 
 ---
@@ -60,7 +88,7 @@ weather_monitoring_frontend/
 | **State management** | React `useState` / `useEffect` | Single page, single data source — no router or state library needed |
 | **Real-time strategy** | HTTP polling (5s) | Backend has no WebSocket endpoint; simple and reliable |
 | **Charting** | Recharts | Declarative, React-native, lightweight |
-| **Styling** | Plain CSS (global) | Minimal CSS — no CSS-in-JS / Tailwind overhead for < 100 lines |
+| **Styling** | Plain CSS (per-component) | Each component owns its styles in a colocated `.css` file; no shared CSS files |
 | **TypeScript** | Strict mode with `verbatimModuleSyntax` | Forces explicit `.tsx` extension in imports |
 | **Testing** | Vitest + jsdom + RTL | Native Vite integration, no Jest migration needed |
 | **Deployment** | Docker multi-stage → Nginx | Static SPA served by Nginx with API proxy; no Node in production |
@@ -69,6 +97,17 @@ weather_monitoring_frontend/
 ---
 
 ## Current Patterns
+
+### Component Encapsulation
+
+Each component lives in its own folder with the same name. The folder contains the component implementation (`.tsx`) and its styles (`.css`). This pattern:
+
+- **Scales** — new components don't clutter a flat directory; adding a folder does not require updating shared files
+- **Encapsulates styles** — each component imports only its own CSS; no risk of cross-component style conflicts from a monolithic stylesheet
+- **Clarifies ownership** — every file in a component folder belongs to that component; feature ownership is explicit
+- **Keeps imports predictable** — the import path `components/Header/Header` is as short as it is clear
+
+**Exception**: `ProtectedRoute` has no `.css` — it has no presentational styles.
 
 ### Component Communication Flow
 
@@ -124,9 +163,9 @@ useEffect with setInterval(5000) — fires immediately, then every 5s
 
 ### Styling Strategy
 
-- **Global CSS files**: `App.css` (body/reset) and `Dashboard.css` (all component styles).
+- **Per-component CSS files**: Each component in `components/{Name}/{Name}.css` imports its own styles. `App.css` (body/reset) is the only global file.
 - **Class naming**: kebab-case strings (e.g., `connection-status`, `indicator-card`, `temp-hot`).
-- **No CSS modules**: Raw class names in `className` attributes — potential for collisions.
+- **No CSS modules**: Raw class names in `className` attributes — potential for collisions. The per-component structure mitigates this by colocating styles with usage.
 - **Responsive**: CSS Grid with `grid-template-columns: 1fr 1fr` → `1fr` at 768px breakpoint.
 - **Color coding**: Indicator values change color based on thresholds (temp: hot>35, cold<15; humidity: high>80, low<30).
 - **Shadows**: Consistent `box-shadow: 0 2px 12px rgba(0,0,0,0.08)` on cards.
@@ -138,23 +177,32 @@ useEffect with setInterval(5000) — fires immediately, then every 5s
 - **Environment**: jsdom.
 - **Globals**: `globals: true` — no need to import `describe`/`it`/`expect` (though tests do import them).
 - **Setup**: `src/tests/setup.ts` imports `@testing-library/jest-dom` for DOM matchers.
-- **Coverage**: 3 test files covering `Header`, `CurrentIndicators`, `ConnectionStatus`. No tests for `Dashboard`, `TemperatureChart`, `HumidityChart`, `useWeatherData`, or `api.ts`.
+- **Coverage**: 6 test files covering `Header`, `CurrentIndicators`, `ConnectionStatus`, `LoginPage`, `ProtectedRoute`, and `AuthContext`. No tests for `Dashboard`, `TemperatureChart`, `HumidityChart`, `useWeatherData`, or `api.ts`.
 - **Pattern**: Light DOM testing (render + screen queries + container.querySelector for CSS classes).
 
 ### Naming Conventions
 
 | Layer | Convention | Examples |
 |---|---|---|
-| Files | PascalCase for components, camelCase for hooks/services | `Header.tsx`, `useWeatherData.ts`, `api.ts` |
+| Component folders | PascalCase, matches component name | `Header/`, `TemperatureChart/` |
+| Files | PascalCase for components, camelCase for hooks/services | `Header/Header.tsx`, `useWeatherData.ts`, `api.ts` |
 | Exports | Named exports for components, default export for `App` | `export function Header` |
 | Props | PascalCase interface per component | `HeaderProps`, `ConnectionStatusProps` |
 | CSS classes | kebab-case | `indicator-card`, `connection-status`, `last-updated` |
 | Types | PascalCase, singular | `Measurement` |
 
+### Folder Organization
+
+- Every component in `src/components/` lives in its own folder named after the component (PascalCase).
+- Each component folder contains the `.tsx` implementation and a colocated `.css` stylesheet.
+- Non-component directories (`hooks/`, `services/`, `types/`, `contexts/`) remain flat.
+- Test files stay in `src/tests/`, importing components by their folder path (e.g., `from '../components/Header/Header'`).
+- Import paths are always explicit — no barrel `index.ts` files.
+
 ### Environment Configuration
 
-- **No `.env` files** or environment variables.
-- **API URL** hardcoded in `src/services/api.ts:3`.
+- **`.env` file** at project root with `VITE_API_BASE` for API URL configuration.
+- **Fallback**: `src/services/api.ts` defaults to `http://13.223.175.101:5000/api` if `VITE_API_BASE` is not set.
 - **Nginx proxy** rewrites `/api/` to backend in production (`nginx.conf:13`).
 - **Docker build** uses `npm ci` (not `npm install`) for reproducible builds.
 

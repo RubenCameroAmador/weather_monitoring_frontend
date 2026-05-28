@@ -16,6 +16,28 @@ Rubén Camero
 - Fully responsive (mobile-friendly)
 - Bearer-token authentication (login page + protected dashboard)
 
+## Project Structure
+
+Each component lives in its own folder with a colocated CSS file:
+
+```
+src/
+├── components/
+│   ├── Dashboard/
+│   ├── Header/
+│   ├── ConnectionStatus/
+│   ├── CurrentIndicators/
+│   ├── TemperatureChart/
+│   ├── HumidityChart/
+│   ├── LoginPage/
+│   └── ProtectedRoute/
+├── contexts/
+├── hooks/
+├── services/
+├── types/
+└── tests/
+```
+
 ## Setup
 
 ```bash
@@ -24,12 +46,6 @@ npm run dev
 ```
 
 The app starts at `http://localhost:5173` and redirects to `/login`.
-
-## Credentials
-
-Default login credentials (provided by the backend):
-- **Username**: `Ruben`
-- **Password**: `1234`
 
 ## Testing
 

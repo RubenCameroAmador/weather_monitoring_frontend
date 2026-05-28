@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { CurrentIndicators } from '../components/CurrentIndicators'
+import { CurrentIndicators } from '../components/CurrentIndicators/CurrentIndicators'
 
 describe('CurrentIndicators', () => {
   it('renders temperature and humidity values', () => {

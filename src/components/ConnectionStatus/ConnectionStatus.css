@@ -1,0 +1,8 @@
+.connection-status {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0.5rem; margin-bottom: 1rem; font-size: 0.85rem;
+}
+.status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.status-dot.connected { background: #4caf50; box-shadow: 0 0 6px #4caf50; }
+.status-dot.disconnected { background: #f44336; }
+.error-msg { color: #f44336; margin-left: 0.5rem; }
