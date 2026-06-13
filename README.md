@@ -59,7 +59,7 @@ npm run test
 The API base URL is configurable via the `VITE_API_BASE` environment variable (see `.env`).
 
 | Method | Endpoint | Auth | Description |
-|---|---|---|---|---|
+|---|---|---|---|
 | POST | `/api/login` | No | Authenticate, returns `{ access_token, refresh_token }` |
 | POST | `/api/refresh` | Bearer (refresh token) | Exchange refresh token for a new `{ access_token }` |
 | GET | `/api/measurements/latest` | Yes (Bearer) | Latest sensor measurements |
