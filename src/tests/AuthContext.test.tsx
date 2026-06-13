@@ -4,10 +4,11 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext'
 import { BrowserRouter } from 'react-router-dom'
 
 function TestConsumer() {
-  const { token, isAuthenticated, isLoading, login, logout } = useAuth()
+  const { token, refreshToken, isAuthenticated, isLoading, login, logout } = useAuth()
   return (
     <div>
       <p data-testid="token">{token ?? 'null'}</p>
+      <p data-testid="refresh-token">{refreshToken ?? 'null'}</p>
       <p data-testid="authenticated">{isAuthenticated ? 'true' : 'false'}</p>
       <p data-testid="loading">{isLoading ? 'true' : 'false'}</p>
       <button data-testid="login-btn" onClick={() => login('user', 'pass')}>Login</button>
@@ -38,14 +39,17 @@ describe('AuthContext', () => {
   it('starts unauthenticated with no token', () => {
     renderWithProvider()
     expect(screen.getByTestId('token')).toHaveTextContent('null')
+    expect(screen.getByTestId('refresh-token')).toHaveTextContent('null')
     expect(screen.getByTestId('authenticated')).toHaveTextContent('false')
     expect(screen.getByTestId('loading')).toHaveTextContent('false')
   })
 
   it('reads existing token from localStorage on mount', () => {
     localStorage.setItem('auth_token', 'stored-token')
+    localStorage.setItem('refresh_token', 'stored-refresh')
     renderWithProvider()
     expect(screen.getByTestId('token')).toHaveTextContent('stored-token')
+    expect(screen.getByTestId('refresh-token')).toHaveTextContent('stored-refresh')
     expect(screen.getByTestId('authenticated')).toHaveTextContent('true')
   })
 
