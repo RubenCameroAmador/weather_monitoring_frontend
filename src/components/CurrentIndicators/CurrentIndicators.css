@@ -3,13 +3,13 @@
   flex-wrap: wrap; margin-bottom: 1.5rem;
 }
 .indicator-card {
-  background: #fff; border-radius: 12px; padding: 1.5rem 2rem;
-  text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  background: var(--bg-surface); border-radius: 12px; padding: 1.5rem 2rem;
+  text-align: center; box-shadow: var(--shadow-card);
   min-width: 150px; flex: 1; max-width: 250px;
 }
 .indicator-icon { font-size: 2rem; }
 .indicator-value { font-size: 2.5rem; font-weight: 700; margin: 0.25rem 0; }
-.indicator-label { color: #666; font-size: 0.9rem; }
+.indicator-label { color: var(--text-secondary); font-size: 0.9rem; }
 .temp-hot .indicator-value { color: #e74c3c; }
 .temp-cold .indicator-value { color: #3498db; }
 .temp-normal .indicator-value { color: #e67e22; }

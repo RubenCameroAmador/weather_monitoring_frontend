@@ -3,30 +3,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f2f5;
+  background: var(--bg-page);
   padding: 1rem;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .login-card {
-  background: #fff;
+  background: var(--bg-surface);
   border-radius: 12px;
   padding: 2.5rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
   width: 100%;
   max-width: 380px;
+  position: relative;
+}
+
+.login-card > .theme-toggle {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
 }
 
 .login-title {
   text-align: center;
   font-size: 1.5rem;
-  color: #1a1a2e;
+  color: var(--text-primary);
   margin: 0 0 0.25rem;
 }
 
 .login-subtitle {
   text-align: center;
-  color: #888;
+  color: var(--text-muted);
   font-size: 0.9rem;
   margin: 0 0 1.5rem;
 }
@@ -45,27 +52,29 @@
 
 .login-label {
   font-size: 0.85rem;
-  color: #555;
+  color: var(--text-label);
   font-weight: 500;
 }
 
 .login-input {
   padding: 0.65rem 0.75rem;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-input);
   border-radius: 8px;
   font-size: 0.95rem;
   font-family: inherit;
+  background: var(--bg-surface);
+  color: var(--text-primary);
   transition: border-color 0.15s;
 }
 
 .login-input:focus {
   outline: none;
-  border-color: #4a90d9;
+  border-color: var(--color-link);
   box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
 }
 
 .login-error {
-  color: #f44336;
+  color: var(--color-error);
   font-size: 0.85rem;
   margin: 0;
   text-align: center;
@@ -73,8 +82,8 @@
 
 .login-submit {
   padding: 0.7rem;
-  background: #1a1a2e;
-  color: #fff;
+  background: var(--text-primary);
+  color: var(--bg-surface);
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -85,7 +94,7 @@
 }
 
 .login-submit:hover:not(:disabled) {
-  background: #2d2d5e;
+  opacity: 0.9;
 }
 
 .login-submit:disabled {
@@ -97,11 +106,11 @@
   text-align: center;
   margin-top: 1.25rem;
   font-size: 0.85rem;
-  color: #888;
+  color: var(--text-muted);
 }
 
 .login-register-link a {
-  color: #4a90d9;
+  color: var(--color-link);
   text-decoration: none;
   font-weight: 500;
 }

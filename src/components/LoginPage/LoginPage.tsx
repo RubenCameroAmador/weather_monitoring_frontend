@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext.tsx'
+import { ThemeToggle } from '../ThemeToggle/ThemeToggle'
 import './LoginPage.css'
 
 export function LoginPage() {
@@ -32,6 +33,7 @@ export function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
+        <ThemeToggle />
         <h1 className="login-title">Weather Monitoring</h1>
         <p className="login-subtitle">Sign in to continue</p>
 

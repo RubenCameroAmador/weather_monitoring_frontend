@@ -1,6 +1,7 @@
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext.tsx'
+import { ThemeToggle } from '../ThemeToggle/ThemeToggle'
 import './Header.css'
 
 interface HeaderProps {
@@ -18,7 +19,8 @@ export function Header({ lastUpdated }: HeaderProps) {
 
   return (
     <header className="header">
-      <div className="header-logout">
+      <div className="header-actions">
+        <ThemeToggle />
         <button onClick={handleLogout} className="logout-btn">Logout</button>
       </div>
       <h1>Weather Monitoring</h1>

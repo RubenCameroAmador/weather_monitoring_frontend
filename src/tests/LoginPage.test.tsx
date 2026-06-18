@@ -51,7 +51,7 @@ describe('LoginPage', () => {
 
   it('shows registration link', () => {
     renderWithProviders(<LoginPage />)
-    expect(screen.getByText('Regístrate')).toBeInTheDocument()
-    expect(screen.getByText('¿No tienes cuenta?')).toBeInTheDocument()
+    expect(screen.getByText('Sign up')).toBeInTheDocument()
+    expect(screen.getByText("Don't have an account?")).toBeInTheDocument()
   })
 })

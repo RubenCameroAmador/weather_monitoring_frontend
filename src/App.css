@@ -1,6 +1,44 @@
+:root {
+  --bg-page: #f0f2f5;
+  --bg-surface: #fff;
+  --text-primary: #1a1a2e;
+  --text-secondary: #666;
+  --text-muted: #888;
+  --text-label: #555;
+  --border-input: #ddd;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --color-link: #4a90d9;
+  --color-error: #f44336;
+  --color-success: #2e7d32;
+  --chart-grid: #ccc;
+  --chart-axis: #666;
+  --tooltip-bg: #fff;
+  --tooltip-border: #ccc;
+  --tooltip-color: #333;
+}
+
+.dark {
+  --bg-page: #121212;
+  --bg-surface: #1e1e1e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #aaa;
+  --text-muted: #888;
+  --text-label: #bbb;
+  --border-input: #444;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
+  --color-link: #6ab0f3;
+  --color-error: #ef5350;
+  --color-success: #66bb6a;
+  --chart-grid: #444;
+  --chart-axis: #aaa;
+  --tooltip-bg: #1e1e1e;
+  --tooltip-border: #444;
+  --tooltip-color: #e0e0e0;
+}
+
 body {
   margin: 0;
-  background: #f0f2f5;
+  background: var(--bg-page);
   min-height: 100vh;
 }
 

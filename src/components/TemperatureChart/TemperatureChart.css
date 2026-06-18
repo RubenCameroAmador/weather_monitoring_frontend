@@ -1,5 +1,5 @@
 .chart-card {
-  background: #fff; border-radius: 12px; padding: 1rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  background: var(--bg-surface); border-radius: 12px; padding: 1rem;
+  box-shadow: var(--shadow-card);
 }
-.chart-card h3 { margin: 0 0 0.5rem; font-size: 1rem; }
+.chart-card h3 { margin: 0 0 0.5rem; font-size: 1rem; color: var(--text-primary); }

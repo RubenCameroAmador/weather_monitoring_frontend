@@ -7,7 +7,7 @@
 
 .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-.loading { text-align: center; color: #888; }
+.loading { text-align: center; color: var(--text-muted); }
 
 @media (max-width: 768px) {
   .charts-container { grid-template-columns: 1fr; }

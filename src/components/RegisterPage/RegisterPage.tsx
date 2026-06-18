@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext.tsx'
+import { ThemeToggle } from '../ThemeToggle/ThemeToggle'
 import { registerUser } from '../../services/api.ts'
 import './RegisterPage.css'
 
@@ -60,6 +61,7 @@ export function RegisterPage() {
   return (
     <div className="register-page">
       <div className="register-card">
+        <ThemeToggle />
         <h1 className="register-title">Weather Monitoring</h1>
         <p className="register-subtitle">Create your account</p>
 
