@@ -29,6 +29,7 @@ src/
 │   ├── TemperatureChart/  # Recharts line chart (red #ff6b6b)
 │   ├── HumidityChart/     # Recharts line chart (teal #4ecdc4)
 │   ├── LoginPage/         # Login form with validation + inline error
+│   ├── RegisterPage/      # Registration form with validation + inline error
 │   └── ProtectedRoute/    # Route guard — redirects to /login if unauthenticated
 ├── contexts/
 │   └── AuthContext.tsx        # AuthProvider + useAuth hook (token in localStorage)
@@ -43,7 +44,7 @@ src/
 
 Data flow: `api.ts` → `useWeatherData` (polling) → `Dashboard` → child components via props.
 
-Routes: `/` redirects to `/dashboard` or `/login` based on auth state; `/login` is public; `/dashboard` is protected via `ProtectedRoute`.
+Routes: `/` redirects to `/dashboard` or `/login` based on auth state; `/login` and `/register` are public; `/dashboard` is protected via `ProtectedRoute`.
 
 ## Key details
 

@@ -48,4 +48,10 @@ describe('LoginPage', () => {
     renderWithProviders(<LoginPage />)
     expect(screen.getByText('Sign in to continue')).toBeInTheDocument()
   })
+
+  it('shows registration link', () => {
+    renderWithProviders(<LoginPage />)
+    expect(screen.getByText('Regístrate')).toBeInTheDocument()
+    expect(screen.getByText('¿No tienes cuenta?')).toBeInTheDocument()
+  })
 })

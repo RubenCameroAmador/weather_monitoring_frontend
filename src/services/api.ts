@@ -70,6 +70,16 @@ export async function fetchLatestMeasurements(): Promise<Measurement[]> {
   return apiRequest<Measurement[]>('/measurements/latest')
 }
 
+export async function registerUser(
+  username: string,
+  password: string,
+): Promise<{ id: number; username: string }> {
+  return apiRequest<{ id: number; username: string }>('/users', {
+    method: 'POST',
+    body: JSON.stringify({ username, password }),
+  })
+}
+
 export async function loginUser(
   username: string,
   password: string,
