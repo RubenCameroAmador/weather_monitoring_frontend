@@ -1,0 +1,47 @@
+.trend-indicators {
+  display: flex;
+  gap: 1rem;
+}
+
+.trend-card {
+  background: var(--bg-surface);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-card);
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.trend-icon {
+  font-size: 1.25rem;
+}
+
+.trend-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  color: var(--text-primary);
+}
+
+.trend-arrow {
+  font-size: 1rem;
+}
+
+.trend-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.trend-delta {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.trend-up { color: #e74c3c; }
+.trend-down { color: #3498db; }

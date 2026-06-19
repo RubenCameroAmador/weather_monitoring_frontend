@@ -2,7 +2,5 @@ services:
   weather-frontend:
     build: .
     container_name: weather-monitoring-frontend
-    ports:
-      - "80:80"
     restart: unless-stopped
 

@@ -1,0 +1,38 @@
+.period-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.stat-card {
+  background: var(--bg-surface);
+  border-radius: 10px;
+  padding: 0.75rem;
+  box-shadow: var(--shadow-card);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.stat-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.stat-hot { color: #e74c3c; }
+.stat-cold { color: #3498db; }
+.stat-wet { color: #2980b9; }
+.stat-dry { color: #e67e22; }
